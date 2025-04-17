@@ -6,6 +6,7 @@ import { ThresholdBadge } from "@/components/ui/threshold-badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/formatters";
 import { projects } from "@/data/mockData";
+import { Link } from "react-router-dom";
 
 interface ProcurementCardProps {
   form: ProcurementForm;
@@ -44,7 +45,9 @@ export function ProcurementCard({ form }: ProcurementCardProps) {
       </CardContent>
       <CardFooter className="pt-2">
         <div className="flex justify-between w-full">
-          <Button variant="outline" size="sm">View Details</Button>
+          <Link to={`/forms/${form.id}`}>
+            <Button variant="outline" size="sm">View Details</Button>
+          </Link>
           {form.status === 'pending' && (
             <Button variant="default" size="sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
