@@ -12,16 +12,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { projects } from "@/data/mockData";
-import { useState } from "react";
+import { projects, budgetLines, activities } from "@/data/mockData";
+import { useState, useMemo } from "react";
 import { ThresholdBadge } from "@/components/ui/threshold-badge";
 import { formatCurrency } from "@/lib/formatters";
 
 export default function NewFormPage() {
+  const [selectedProject, setSelectedProject] = useState<string>("");
+  const [selectedBudgetLine, setSelectedBudgetLine] = useState<string>("");
+  const [selectedActivity, setSelectedActivity] = useState<string>("");
   const [items, setItems] = useState([
     { id: "1", description: "", quantity: 1, unitPrice: 0, totalPrice: 0 },
   ]);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // Filter budget lines and activities based on selected project
+  const filteredBudgetLines = useMemo(() => 
+    budgetLines.filter(bl => bl.projectId === selectedProject),
+    [selectedProject]
+  );
+
+  const filteredActivities = useMemo(() => 
+    activities.filter(act => act.projectId === selectedProject),
+    [selectedProject]
+  );
 
   const updateItem = (id: string, field: string, value: string | number) => {
     const updatedItems = items.map((item) => {
@@ -88,7 +102,7 @@ export default function NewFormPage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="project">Associated Project</Label>
-                  <Select>
+                  <Select value={selectedProject} onValueChange={setSelectedProject}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a project" />
                     </SelectTrigger>
@@ -102,6 +116,42 @@ export default function NewFormPage() {
                   </Select>
                 </div>
               </div>
+
+              {selectedProject && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="budgetLine">Budget Line</Label>
+                    <Select value={selectedBudgetLine} onValueChange={setSelectedBudgetLine}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a budget line" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredBudgetLines.map((bl) => (
+                          <SelectItem key={bl.id} value={bl.id}>
+                            {bl.name} ({formatCurrency(bl.remainingAmount)} remaining)
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="activity">Activity (Optional)</Label>
+                    <Select value={selectedActivity} onValueChange={setSelectedActivity}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an activity" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {filteredActivities.map((activity) => (
+                          <SelectItem key={activity.id} value={activity.id}>
+                            {activity.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
                 <Textarea

@@ -1,5 +1,4 @@
-
-import { Project, ProcurementForm, User } from '@/types';
+import { Project, ProcurementForm, User, BudgetLine, Activity } from '@/types';
 
 // Sample users
 export const users: User[] = [
@@ -48,6 +47,64 @@ export const projects: Project[] = [
     startDate: '2025-04-01',
     endDate: '2025-06-30',
     status: 'active'
+  }
+];
+
+export const budgetLines: BudgetLine[] = [
+  {
+    id: 'bl1',
+    projectId: 'project1',
+    name: 'Office Furniture',
+    amount: 20000,
+    remainingAmount: 15000
+  },
+  {
+    id: 'bl2',
+    projectId: 'project1',
+    name: 'Construction Materials',
+    amount: 30000,
+    remainingAmount: 28000
+  },
+  {
+    id: 'bl3',
+    projectId: 'project2',
+    name: 'Hardware',
+    amount: 15000,
+    remainingAmount: 12000
+  },
+  {
+    id: 'bl4',
+    projectId: 'project2',
+    name: 'Software Licenses',
+    amount: 10000,
+    remainingAmount: 8000
+  }
+];
+
+export const activities: Activity[] = [
+  {
+    id: 'act1',
+    projectId: 'project1',
+    name: 'Office Layout Planning',
+    description: 'Planning and designing office space layout',
+    startDate: '2025-01-15',
+    endDate: '2025-02-15'
+  },
+  {
+    id: 'act2',
+    projectId: 'project1',
+    name: 'Furniture Installation',
+    description: 'Installing new office furniture',
+    startDate: '2025-02-16',
+    endDate: '2025-03-15'
+  },
+  {
+    id: 'act3',
+    projectId: 'project2',
+    name: 'Hardware Setup',
+    description: 'Setting up new computer hardware',
+    startDate: '2025-02-20',
+    endDate: '2025-03-10'
   }
 ];
 

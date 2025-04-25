@@ -1,4 +1,3 @@
-
 export type Project = {
   id: string;
   name: string;
@@ -43,6 +42,23 @@ export const THRESHOLD_LEVELS = {
   low: 1000,
   medium: 5000,
   high: 10000
+};
+
+export type BudgetLine = {
+  id: string;
+  projectId: string;
+  name: string;
+  amount: number;
+  remainingAmount: number;
+};
+
+export type Activity = {
+  id: string;
+  projectId: string;
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
 };
 
 export type User = {
